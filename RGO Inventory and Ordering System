@@ -1,0 +1,562 @@
+#include <iostream>
+#include <string>
+#include <conio.h>
+#include <algorithm>
+#include <iomanip>
+using namespace std;
+
+
+void exitProgram();
+
+class Product {
+    private:
+        string name;
+        double price;
+        int quantity;
+        int sold;
+        int tsold;
+    public:
+        Product() {
+            name = "";
+            price = 0.0;
+            quantity = 0;
+            sold = 0;
+            tsold = 0;
+        }
+        Product(string n, double p, int q, int s, int t) {
+            name = n;
+            price = p;
+            quantity = q;
+            sold = s;
+            tsold = t;
+        }
+
+        string getName() const{
+            return name;
+        }
+        double getPrice() const{
+            return price;
+        }
+        int getQuantity() const{
+            return quantity;
+        }
+
+        int tSold() {
+            tsold = tsold + sold;
+            
+            return tsold;
+        }
+        void setQuantity(int q) {
+            quantity = q;
+        }
+
+        void setPrice(double p) {
+            price = p;
+        }
+
+        void setSold(int s) {
+            sold = s;
+        }
+
+        
+        
+};
+
+
+bool compareProductsByName(const Product& a, const Product& b) {
+    return a.getName() < b.getName();
+}
+
+
+int main(){
+
+
+    const int MAX_PRODUCTS = 100;
+    Product products[MAX_PRODUCTS];
+    int numProducts = 0;
+    char choice;
+
+    cout << " _     _  _______  ___      _______  _______  __   __  _______  __ " << endl;
+    cout << "| | _ | ||       ||   |    |       ||       ||  |_|  ||       ||  |" << endl;
+    cout << "| || || ||    ___||   |    |       ||   _   ||       ||    ___||  |" << endl;
+    cout << "|       ||   |___ |   |    |       ||  | |  ||       ||   |___ |  |" << endl;
+    cout << "|       ||    ___||   |___ |      _||  |_|  ||       ||    ___||__|" << endl;
+    cout << "|   _   ||   |___ |       ||     |_ |       || ||_|| ||   |___  __ " << endl;
+    cout << "|__| |__||_______||_______||_______||_______||_|   |_||_______||__|" << endl;
+    cout << "--------------------------------------------------------------------" << endl;
+    cout << "--------------------------------------------------------------------" << endl;
+    system("pause");
+    system("cls");
+    system("cls");
+
+
+menu:
+    while (true) {
+    cout << "    __  __       _         __  __                  " << endl;
+    cout << "   |  \\/  |     (_)       |  \\/  |                 " << endl;
+    cout << "   | \\  / | __ _ _ _ __   | \\  / | ___ _ __  _   _ " << endl;
+    cout << "   | |\\/| |/ _` | | '_ \\  | |\\/| |/ _ \\ '_ \\| | | |" << endl;
+    cout << "   | |  | | (_| | | | | | | |  | |  __/ | | | |_| |" << endl;
+    cout << "   |_|  |_|\\__,_|_|_| |_| |_|  |_|\\___|_| |_|\\__,_|" << endl << endl;
+    
+    cout << "[1] Add/Remove Product\n";
+    cout << "[2] View Inventory\n";
+    cout << "[3] Generate New Order\n";
+    cout << "[4] View Total Sales\n";
+    cout << "[5] Exit Program\n";
+    cout << "What would you like to do?\n";
+    cout << "Select Mode(1-6): ";
+    cin >> choice;
+
+    system("cls");
+    
+
+    //switch case for menu
+    switch (choice) {
+        case '1':
+        addremove:
+        cout << "                _     _     _______                                 _____               _            _   " << endl;
+        cout << "       /\\      | |   | |   / /  __ \\                               |  __ \\             | |          | |  " << endl;
+        cout << "      /  \\   __| | __| |  / /| |__) |___ _ __ ___   _____   _____  | |__) | __ ___   __| |_   _  ___| |_ " << endl;
+        cout << "     / /\\ \\ / _` |/ _` | / / |  _  // _ \\ '_ ` _ \\ / _ \\ \\ / / _ \\ |  ___/ '__/ _ \\ / _` | | | |/ __| __|" << endl;
+        cout << "    / ____ \\ (_| | (_| |/ /  | | \\ \\  __/ | | | | | (_) \\ V /  __/ | |   | | | (_) | (_| | |_| | (__| |_ " << endl;
+        cout << "   /_/    \\_\\__,_|\\__,_/_/   |_|  \\_\\___|_| |_| |_|\\___/ \\_/ \\___| |_|   |_|  \\___/ \\__,_|\\__,_|\\___|\\__|" << endl << endl;
+        
+        char choice1;
+
+        cout << "[1] Add New Product\n";
+        cout << "[2] Remove Products\n";
+        cout << "[3] Edit Product information\n";
+        cout << "[4] Go back to menu\n\n";
+        cout << "Enter choice: ";
+        cin >> choice1;
+        
+
+
+        //switch case for add/remove product
+        switch (choice1)
+        {
+            case '1':
+            system("cls");
+                cout << "              _     _   _____               _            _   " << endl;
+                cout << "     /\\      | |   | | |  __ \\             | |          | |  " << endl;
+                cout << "    /  \\   __| | __| | | |__) | __ ___   __| |_   _  ___| |_ " << endl;
+                cout << "   / /\\ \\ / _` |/ _` | |  ___/ '__/ _ \\ / _` | | | |/ __| __|" << endl;
+                cout << "  / ____ \\ (_| | (_| | | |   | | | (_) | (_| | |_| | (__| |_ " << endl;
+                cout << " /_/    \\_\\__,_|\\__,_| |_|   |_|  \\___/ \\__,_|\\__,_|\\___|\\__|" << endl << endl;
+                
+                if (numProducts < MAX_PRODUCTS) {
+                    string name;
+                    double price;
+                    int quantity;
+                    int sold = 0;
+                    int tsold = 0;
+
+                
+                    cout << "Enter product name: ";
+                    getline(cin >> ws, name);
+                    cout << "Enter product price: ";
+                    cin >> price;
+                    cout << "Enter product quantity: ";
+                    cin >> quantity;
+                    products[numProducts] = Product(name, price, quantity, sold, tsold);
+                    numProducts++;
+                    cout << "\nProduct \"" << name << "\" successfully added.";
+                } else {
+                    cout << "Maximum number of products reached." << endl;
+                }
+                cout << endl;
+                
+                system("pause");
+                system("cls");
+                
+                goto addremove;
+                
+            case '2':
+                system("cls");
+
+                cout << "  _____                                 _____               _            _   " << endl;
+                cout << " |  __ \\                               |  __ \\             | |          | |  " << endl;
+                cout << " | |__) |___ _ __ ___   _____   _____  | |__) | __ ___   __| |_   _  ___| |_ " << endl;
+                cout << " |  _  // _ \\ '_ ` _ \\ / _ \\ \\ / / _ \\ |  ___/ '__/ _ \\ / _` | | | |/ __| __|" << endl;
+                cout << " | | \\ \\  __/ | | | | | (_) \\ V /  __/ | |   | | | (_) | (_| | |_| | (__| |_ " << endl;
+                cout << " |_|  \\_\\___|_| |_| |_|\\___/ \\_/ \\___| |_|   |_|  \\___/ \\__,_|\\__,_|\\___|\\__|" << endl << endl;
+
+                if (numProducts > 0) {
+                    string name;
+                    cout << "Enter product name: ";
+                    getline(cin >> ws, name);;
+                    bool found = false;
+                    for (int i = 0; i < numProducts; i++) {
+                        if (products[i].getName() == name) {
+                            for (int j = i; j < numProducts - 1; j++) {
+                                products[j] = products[j+1];
+                            }
+                            numProducts--;
+                            cout << "\nProduct \"" << name << "\" successfully deleted." << endl;
+                            found = true;
+                            system("pause");
+                            
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        cout << "Product not found." << endl;
+                        system("pause");
+                    }
+                } else {
+                    cout << "No products in inventory." << endl;
+                    system("pause"); 
+                }
+                cout << endl;
+
+            system("cls");
+                
+            goto addremove;
+
+        case '3':
+        system("cls");
+        
+        cout << "  ______    _ _ _     _____               _            _     _____        __                           _   _             " << endl;
+        cout << " |  ____|  | (_) |   |  __ \\             | |          | |   |_   _|      / _|                         | | (_)            " << endl;
+        cout << " | |__   __| |_| |_  | |__) | __ ___   __| |_   _  ___| |_    | |  _ __ | |_ ___  _ __ _ __ ___   __ _| |_ _  ___  _ __  " << endl;
+        cout << " |  __| / _` | | __| |  ___/ '__/ _ \\ / _` | | | |/ __| __|   | | | '_ \\|  _/ _ \\| '__| '_ ` _ \\ / _` | __| |/ _ \\| '_ \\ " << endl;
+        cout << " | |___| (_| | | |_  | |   | | | (_) | (_| | |_| | (__| |_   _| |_| | | | || (_) | |  | | | | | | (_| | |_| | (_) | | | |" << endl;
+        cout << " |______\\__,_|_|\\__| |_|   |_|  \\___/ \\__,_|\\__,_|\\___|\\__| |_____|_| |_|_| \\___/|_|  |_| |_| |_|\\__,_|\\__|_|\\___/|_| |_|" << endl << endl;
+        
+
+            if (numProducts > 0) {
+                string name;
+                cout << "Enter product name: ";
+                getline(cin >> ws, name);
+                bool found = false;
+                for (int i = 0; i < numProducts; i++) {
+                    if (products[i].getName() == name) {
+                            char choice2;
+                            cout << "[1] Edit price" << endl;
+                            cout << "[2] Edit quantity" <<endl;
+                            cout << "[3] Cancel and return to Add/Remove Product" << endl;
+                            cin >> choice2;
+                            switch (choice2) {
+                                case '1':
+                                    double price;
+                                    cout << "Enter new price: ";
+                                    cin >> price;
+                                    products[i].setPrice(price);
+                                    break;
+                                case '2':
+                                    int quantity;
+                                    cout << "Enter new quantity: ";
+                                    cin >> quantity;
+                                    products[i].setQuantity(quantity);
+                                    break;
+                                case '3':
+                                    system("cls");
+                                    goto addremove;
+                                default:
+                                    cout << "Invalid choice." << endl;
+                                    break;
+                                 }
+                                found = true;
+                                system("pause");
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            cout << "Product not found." << endl;
+                            system("pause");
+                        }                  
+            } else {
+                cout << "No products in inventory." << endl;
+                system("pause");
+            }
+            
+            system("cls");
+            goto addremove;
+
+    
+        case '4':
+        system("cls");
+        
+        break;
+
+        default:
+        cout << "Invalid! Try Again\n";
+        getch();
+        system("cls");
+        goto addremove;
+        
+    }
+        //end for add/remove product
+
+		system("cls");
+		goto menu;
+
+        case '2':
+        inventory:
+        cout << "   __      ___                 _____                      _                   " << endl;
+        cout << "   \\ \\    / (_)               |_   _|                    | |                  " << endl;
+        cout << "    \\ \\  / / _  _____      __   | |  _ ____   _____ _ __ | |_ ___  _ __ _   _ " << endl;
+        cout << "     \\ \\/ / | |/ _ \\ \\ /\\ / /   | | | '_ \\ \\ / / _ \\ '_ \\| __/ _ \\| '__| | | |" << endl;
+        cout << "      \\  /  | |  __/\\ V  V /   _| |_| | | \\ V /  __/ | | | || (_) | |  | |_| |" << endl;
+        cout << "       \\/   |_|\\___| \\_/\\_/   |_____|_| |_|\\_/ \\___|_| |_|\\__\\___/|_|   \\__, |" << endl;
+        cout << "                                                                         __/ |" << endl;
+        cout << "                                                                        |___/ " << endl << endl;
+        if (numProducts > 0) {
+                    cout << left;
+                    cout << setw(40) << "Name";
+                    cout << setw(10) << "Price";
+                    cout << right;
+                    cout << setw(10) << "Quantity";
+                    cout << endl;
+
+                    for (int i = 0; i < 60; i++) cout << "*";
+                    cout << endl;
+                    
+                    for (int i = 0; i < numProducts; i++) {
+                        cout << left;
+                        cout << setw(40) << products[i].getName();
+                        cout << setw(10) << "Php" << products[i].getPrice(); 
+                        cout << right;
+                        cout << setw(10) << products[i].getQuantity() << endl;
+                    }
+                    cout << endl;
+                } else {
+                    cout << "No products in inventory." << endl;
+                }
+
+    char choice2;
+    cout << "[1] Search product\n";
+    cout << "[2] Sort products alphabetically\n";
+    cout << "[3] Go back to menu\n\n";
+    cout << "What would you like to do?\nEnter Choice: ";
+    cin >> choice2;
+
+    //switch statement for view inventory
+    switch (choice2)
+    {
+        case '1':
+        {
+            if (numProducts > 0) {
+                string name;
+                cout << "\nEnter product name to search for: ";
+                getline(cin >> ws, name);;
+
+                bool found = false;
+                for (int i = 0; i < numProducts; i++) {
+                    if (products[i].getName() == name) {
+                        cout << products[i].getName() << " (Php" << products[i].getPrice() << ", " << products[i].getQuantity() << " in stock)" << endl;
+                        cout << "Possible income left: Php" << (products[i].getPrice() * products[i].getQuantity()) << endl;
+                        found = true;
+                    }
+                }
+
+            if (!found) {
+                cout << "\nProduct not found." << endl;
+            }
+            } else {
+                cout << "\nNo products in inventory." << endl;
+            }
+            system("pause");
+            system("cls");
+            goto inventory;
+        }
+
+        case '2':
+        {
+            if (numProducts > 0) {
+                sort(products, products+numProducts, compareProductsByName);
+                cout << "\nPress any key to continue sorting." << endl;
+                getch();
+                system("cls");
+                goto inventory;
+            } else {
+                cout << "\nNo products in inventory." << endl;
+            }
+            system("pause");
+            system("cls");
+            goto inventory;
+        }
+            
+        case '3':
+        {
+            
+            break;
+        }
+        default:
+            cout << "Incorrect! Try again.";
+            getch();
+            system("cls");
+            
+            goto inventory;
+    }
+        
+        system("cls");
+        goto menu;
+        
+        case '3':
+        {
+        cout << "     _____                           _         _   _                  ____          _           " << endl;
+        cout << "    / ____|                         | |       | \\ | |                / __ \\        | |          " << endl;
+        cout << "   | |  __  ___ _ __   ___ _ __ __ _| |_ ___  |  \\| | _____      __ | |  | |_ __ __| | ___ _ __ " << endl;
+        cout << "   | | |_ |/ _ \\ '_ \\ / _ \\ '__/ _` | __/ _ \\ | . ` |/ _ \\ \\ /\\ / / | |  | | '__/ _` |/ _ \\ '__|" << endl;
+        cout << "   | |__| |  __/ | | |  __/ | | (_| | ||  __/ | |\\  |  __/\\ V  V /  | |__| | | | (_| |  __/ |   " << endl;
+        cout << "    \\_____|\\___|_| |_|\\___|_|  \\__,_|\\__\\___| |_| \\_|\\___| \\_/\\_/    \\____/|_|  \\__,_|\\___|_|   " << endl << endl;
+
+        if (numProducts > 0){
+            string name;
+            int quantity;
+
+            cout << "Enter product name: ";
+            getline(cin >> ws, name);
+
+            bool found = false;
+
+
+            for (int i = 0; i < numProducts; i++){
+                if (products[i].getName() == name) {
+                    cout << "Enter quantity to order: ";
+                    cin >> quantity;
+                    
+                    
+
+                    if (products[i].getName() == name) {
+                        if (products[i].getQuantity() < quantity) {
+                            cout << "Error: not enough stock available" << endl;
+                            system("pause");
+                            system("cls");
+                            goto menu;
+                            
+                        }
+
+                        
+                    }
+
+                    products[i].setSold(quantity);
+                    double total = quantity * products[i].getPrice();
+                    products[i].setQuantity(products[i].getQuantity() - quantity);
+                    
+                    cout << "Order placed successfully. Total cost: Php" << total << endl;
+                    found = true;
+                    system("pause");
+            }
+            
+            }
+            if (!found) {
+            cout << "Product not found." << endl;
+            system("pause");
+            
+
+        }
+        
+        } else {
+            cout << "No prodcuts in inventory." << endl;
+            system("pause");
+            
+        }
+            
+        }
+        system("cls");
+        goto menu;
+        
+        case '4':
+        {
+        cout << "   __      ___                 _______    _        _    _____       _           " << endl;
+        cout << "   \\ \\    / (_)               |__   __|  | |      | |  / ____|     | |          " << endl;
+        cout << "    \\ \\  / / _  _____      __    | | ___ | |_ __ _| | | (___   __ _| | ___  ___ " << endl;
+        cout << "     \\ \\/ / | |/ _ \\ \\ /\\ / /    | |/ _ \\| __/ _` | |  \\___ \\ / _` | |/ _ \\/ __|" << endl;
+        cout << "      \\  /  | |  __/\\ V  V /     | | (_) | || (_| | |  ____) | (_| | |  __/\\__ \\" << endl;
+        cout << "       \\/   |_|\\___| \\_/\\_/      |_|\\___/ \\__\\__,_|_| |_____/ \\__,_|_|\\___||___/" << endl << endl;
+        
+        
+
+        if (numProducts > 0){
+            double totalSales = 0.0;
+
+            cout << left;
+                cout << setw(40) << "Name";
+                cout << setw(20) << "Item Sold";
+                cout << right;
+                cout << setw(25) << "Total Sales" << endl;
+
+                for (int i = 0; i < 85; i++) cout << "*";
+                cout << endl;
+
+            for (int i = 0; i < numProducts; i++) {
+                int quantitySold = products[i].tSold();
+                double sales = quantitySold * products[i].getPrice();
+                totalSales += sales;
+
+                
+
+                
+                    cout << left;
+                    cout << setw(40) << products[i].getName();
+                    cout << setw(20) << quantitySold;
+                    cout << right;
+                    cout << setw(25) << "Php" << sales;
+
+                
+
+                cout << endl << endl;
+
+                /*
+                cout << "Product name: " << products[i].getName() << endl;
+                cout << "Quantity sold: " << quantitySold << endl;
+                cout << "Total sales: Php" << sales << endl << endl;
+                */
+                
+
+            
+            }
+            cout << "Total sales for all products: Php" << totalSales << endl;
+            system("pause");
+            
+            
+
+        } else {
+            cout << "No sales have been made yet." << endl;
+            system("pause");
+        }
+
+        system("cls");
+        }
+        goto menu;
+        
+        case '5':
+        cout << "Exit\n";
+        exitProgram();
+        goto menu;
+        
+        default:
+        cout << "Try again :(\n";
+        system("pause");
+        system("cls");
+		goto menu;
+    }
+    }
+    //end switch statement for view inventory
+}
+
+
+void exitProgram()
+{
+    char ans;
+    cout << "Do you want to exit the program? (Y/N): ";
+    cin >> ans;
+    if ((ans == 'Y') || (ans == 'y')){
+            system("cls");
+            cout << "Thank you for using the program!";
+            exit(0);
+    }
+    else if ((ans == 'N') || (ans == 'n')){
+            system("cls");
+            
+    }
+    else{
+        cout << "Incorrect choice!\nEnter (Y/N) only";
+        getch();
+        system("cls");
+        exitProgram();
+    }
+}
