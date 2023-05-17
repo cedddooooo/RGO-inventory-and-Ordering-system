@@ -105,7 +105,7 @@ menu:
     cout << "[4] View Total Sales\n";
     cout << "[5] Exit Program\n";
     cout << "What would you like to do?\n";
-    cout << "Select Mode(1-6): ";
+    cout << "Select Mode(1-5): ";
     cin >> choice;
 
     system("cls");
